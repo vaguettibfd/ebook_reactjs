@@ -33,11 +33,18 @@ function MainLayout() {
 
   }, []);
 
-  const currentKey =
+  /*const currentKey =
     location.pathname.startsWith("/listar") ||
     location.pathname.startsWith("/visualizar")
       ? "/listar"
-      : "/cadastrar";
+      : "/cadastrar"; */
+
+      const currentKey =
+      location.pathname.startsWith("/listar") ||
+      location.pathname.startsWith("/visualizar") ||
+      location.pathname.startsWith("/editar")
+        ? "/listar"
+        : "/cadastrar";    
 
   const menuItems = [
     {

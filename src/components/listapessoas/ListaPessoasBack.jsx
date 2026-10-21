@@ -178,9 +178,7 @@ export default function ListaPessoasBack() {
             icon={<EyeOutlined />}
             title="Visualizar"
             onClick={() =>
-              navigate(
-                `/visualizar/${tipo}/${record.id}`
-              )
+              navigate(`/visualizar/${tipo}/${record.id}`)
             }
           />
 
@@ -188,9 +186,7 @@ export default function ListaPessoasBack() {
             icon={<EditOutlined />}
             title="Editar"
             onClick={() =>
-              navigate(
-                `/editar/${tipo}/${record.id}`
-              )
+              navigate(`/editar/${tipo}/${record.id}`)
             }
           />
 

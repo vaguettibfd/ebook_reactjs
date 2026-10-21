@@ -133,36 +133,29 @@ export default class PJDAO {
   
     // Busca uma Pessoa Jurídica pelo identificador
     async buscarPorId(id) {
-  
-      const existente = this.cache.find(
-        (pessoa) => pessoa.id === id
-      );
-  
-      if (existente) {
-        return existente;
-      }
-  
-      const resposta = await fetch(
-        `${this.baseUrl}/${encodeURIComponent(id)}`
-      );
-  
-      if (resposta.status === 404) {
-        return null;
-      }
-  
-      if (!resposta.ok) {
-        throw new Error(
-          `Erro ao buscar PJ: ${resposta.status}`
+
+        console.log("ID recebido:", id);
+      
+        // 1. Procura inicialmente no cache
+        const existente = this.cache.find(
+          (pessoa) => String(pessoa.id) === String(id)
         );
+      
+        if (existente) {
+          return existente;
+        }
+      
+        // 2. Se não encontrou, carrega a lista do backend
+        const lista = await this.carregarLista();
+      
+        // 3. Procura o registro na lista carregada
+        const pessoa = lista.find(
+          (item) => String(item.id) === String(id)
+        );
+      
+        // 4. Retorna o registro encontrado ou null
+        return pessoa ?? null;
       }
-  
-      const dados = await resposta.json();
-      const pessoa = this.mapPJ(dados);
-  
-      this.cache.push(pessoa);
-  
-      return pessoa;
-    }
   
     // Converte JSON recebido em estrutura utilizada no frontend
     mapPJ(pj) {
